@@ -6,11 +6,11 @@ Headless by default
 
 Install npm packages with 
 
-    ```npm install```
+    npm install
 
 Run the Server with 
 
-    ```node app.js```
+    node app.js
 
 Update config.js file with your Google Credentials and MonogDB SRV
 
