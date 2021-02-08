@@ -15,8 +15,7 @@ const meetSchedule = require('./Model/meetSchedule');
 mongoose.Promise = require('bluebird');
 
 const connect = mongoose.connect(config.MONGO_SRV, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    useMongoClient: true,
     /* other options */
 });
 
