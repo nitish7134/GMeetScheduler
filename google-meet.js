@@ -1,8 +1,10 @@
 // const puppeteer = require('puppeteer');
 const puppeteer = require('puppeteer-extra')
+const awsPlugin = require('puppeteer-extra-plugin-aws');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 
 puppeteer.use(StealthPlugin())
+puppeteer.use(awsPlugin());
 
 class GoogleMeet {
     constructor(email, pass, head, strict) {
