@@ -1,6 +1,6 @@
 # GMeetScheduler
 
-Scheduler automatic GMeet Join And Leave
+Schedule automatic GMeet Join And Leave
 
 Headless by default
 
