@@ -3,6 +3,7 @@ function GetScheduleList() {
         url: "/list",
         type: "GET",
         success: function (response) {
+            console.log(response)
             var mainContainer = document.getElementById("mainContainer");
             var output = [];
             var schedule = response.meetSchedule;
@@ -18,6 +19,7 @@ function GetScheduleList() {
                             </p>
                              <p class="card-title">EndTime: ${schedule[i].endTime}
                             </p>
+                            <button onclick="CancelThis('${schedule[i]._id}');" class="btn btn-primary">Cancel This</button>
                         </div>
                     </div>`);
                 output.push(item);
@@ -29,6 +31,18 @@ function GetScheduleList() {
         }
     })
 }
+function CancelThis(id){
+    console.log("Trying to cancel ", id)
+    $.ajax({
+        url: "/Cancel/"+id,
+        type:"GET",
+        credentials: 'same-origin',
+        success: function (response) {
+            document.location.reload();
+        }
+
+    });
+}
 
 function postSchedule() {
     var rawData = $('#MeetUrlForm').serializeArray();
@@ -37,6 +51,9 @@ function postSchedule() {
     itemJSON.meetLink = rawData[0].value;
     itemJSON.startTime = rawData[1].value;
     itemJSON.endTime = rawData[2].value;
+    if(!itemJSON.meetLink.includes("meet")){
+        itemJSON.meetLink = "https://meet.google.com/" +itemJSON.meetLink
+    }
     console.log(itemJSON);
     $.ajax({
         url: "/postlink",

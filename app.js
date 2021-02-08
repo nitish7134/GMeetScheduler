@@ -65,6 +65,21 @@ app.post('/postlink', (req, res) => {
             console.log(err);
         });
 });
+app.get('/Cancel/:ScheduleID', (req, res, next) => {
+    MeetSchedule.findById(req.params.ScheduleID).then(meetSchedule => {
+        if (meetSchedule.joined == true) {
+            meetSchedule.endTime = Date.now();
+            meetSchedule.save();
+        }
+        else {
+            console.log("TRYING TO CANCEL: " + req.params.ScheduleID);
+            MeetSchedule.findByIdAndRemove(req.params.ScheduleID).then((resp) => {
+                res.statusCode = 200;
+            }, (err) => next(err))
+                .catch((err) => next(err));
+        }
+    })
+})
 
 app.use(function (req, res, next) {
     next(createError(404));
