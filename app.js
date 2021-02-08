@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const GoogleMeet = require('./google-meet');
 
 const MeetSchedule = require('./Model/meetSchedule');
-const meetSchedule = require('./Model/meetSchedule');
 
 mongoose.Promise = require('bluebird');
 
