@@ -84,8 +84,8 @@ const port = 3000;
 let email = config.EMAIL;
 let password = config.PASSWORD;
 
-let head = false;
-let strict = true;
+let head = config.head;
+let strict = config.strict;
 
 obj = new GoogleMeet(email, password, head, strict);
 

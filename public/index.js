@@ -1,0 +1,55 @@
+function GetScheduleList() {
+    $.ajax({
+        url: "/list",
+        type: "GET",
+        success: function (response) {
+            var mainContainer = document.getElementById("mainContainer");
+            var output = [];
+            var schedule = response.meetSchedule;
+            for (var i = 0; i < schedule.length; i++) {
+                var item = (`
+                    <div class="card text-white bg-dark m-1" style="max-width: 18rem;">
+                        <div class="card-header">Id: ${i + 1}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-title">Meet Url: ${schedule[i].meetLink}
+                            </p>
+                             <p class="card-title">Start Time: ${schedule[i].startTime}
+                            </p>
+                             <p class="card-title">EndTime: ${schedule[i].endTime}
+                            </p>
+                        </div>
+                    </div>`);
+                output.push(item);
+            }
+            mainContainer.innerHTML = output.join('');
+        }, error: function (error) {
+            console.log("404");
+            console.log(error);
+        }
+    })
+}
+
+function postSchedule() {
+    var rawData = $('#MeetUrlForm').serializeArray();
+    console.log(rawData);
+    var itemJSON = {};
+    itemJSON.meetLink = rawData[0].value;
+    itemJSON.startTime = rawData[1].value;
+    itemJSON.endTime = rawData[2].value;
+    console.log(itemJSON);
+    $.ajax({
+        url: "/postlink",
+        type: "POST",
+        data: itemJSON,
+        credentials: 'same-origin',
+        success: function (response) {
+            console.log("Posted item successfully");
+            console.log(response);
+            itemId = response._id;
+        }, error(err) {
+            console.log(err);
+        }
+    });
+
+}
