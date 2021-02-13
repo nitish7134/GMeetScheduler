@@ -30,6 +30,8 @@ class GoogleMeet {
             this.page = await this.browser.newPage()
             await this.page.goto('https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin')
 
+            await this.page.waitForTimeout(10000)
+
             // Login Start
             await this.page.type("input#identifierId", this.email, {
                 delay: 0
@@ -44,6 +46,8 @@ class GoogleMeet {
             await this.page.click("div#passwordNext")
 
             await this.page.waitForTimeout(1500)
+            await this.page.waitForTimeout(10000)
+
 
             await this.page.goto(url)
 
@@ -59,8 +63,9 @@ class GoogleMeet {
                   await page.click('.JnDFsc > .IYwVEf > .oTVIqe > svg');
                 }, 60000);
               }); */
-
-            await this.page.waitForTimeout(7000)
+              await this.page.waitForTimeout(7000)
+/*
+           
             try {
                 await this.page.click("div.IYwVEf.HotEze.uB7U9e.nAZzG")
             } catch (e) {
@@ -76,7 +81,7 @@ class GoogleMeet {
             }
 
             // sanity check (connect only if both audio and video are muted) :P
-            if (this.strict) {
+            if (this.strict || !this.strict) {
                 let audio = await this.page.evaluate('document.querySelectorAll("div.sUZ4id")[0].children[0].getAttribute("data-is-muted")')
                 let video = await this.page.evaluate('document.querySelectorAll("div.sUZ4id")[1].children[0].getAttribute("data-is-muted")')
 
@@ -86,7 +91,7 @@ class GoogleMeet {
                 }
                 console.log ("all set!!")
             }
-
+*/
             await this.page.waitForTimeout(1000)
             console.log('clicking on join')
             await this.page.click("span.NPEfkd.RveJvd.snByac")

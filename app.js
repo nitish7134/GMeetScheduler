@@ -91,7 +91,7 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
-const port = 3000;
+const port = 80;
 
 // Values
 let email = config.EMAIL;
@@ -107,19 +107,19 @@ connect.then(() => {
     let isRunning = false;
     setInterval(() => {
         if (isRunning) {
-            console.log("Sad")
+          //  console.log("Sad")
         } else {
             isRunning = true;
-            console.log("Checking After 5 Sec")
+           // console.log("Checking After 5 Sec")
             MeetSchedule.find({}).then(meetSchedule => {
                 let flag = true;
 
                 console.log(meetSchedule);
                 for (let i = 0; i < meetSchedule.length; i++) {
                     if (meetSchedule[i].joined !== true) {
-                        console.log("Aint Joined this " + i)
+                     //   console.log("Aint Joined this " + i)
                         if (meetSchedule[i].startTime < Date.now()) {
-                            console.log(`Request for joining meet ${meetSchedule[i].meetLink}`);
+                          //  console.log(`Request for joining meet ${meetSchedule[i].meetLink}`);
                             flag = false;
                             obj.schedule(meetSchedule[i].meetLink);
                             MeetSchedule.findOneAndUpdate({ _id: meetSchedule[i]._id }, { $set: { joined: true } }, { new: true }).then(meetSchedule => {
@@ -128,13 +128,13 @@ connect.then(() => {
                             });
                         }
                     } else {
-                        console.log(" Joined " + i)
+                       // console.log(" Joined " + i)
                         if (meetSchedule[i].endTime < Date.now()) {
                             console.log(`Request for leaving meet ${meetSchedule[i].meetLink}`);
                             flag = false;
                             obj.end();
                             MeetSchedule.deleteOne({ _id: meetSchedule[i]._id }).then(err => {
-                                console.log("Deleted From DB")
+                            //    console.log("Deleted From DB")
                                 isRunning = false;
 
                             })
@@ -146,7 +146,7 @@ connect.then(() => {
 
             });
         }
-    }, 5000)
+    }, 300000)
 
     app.listen(port, () => {
         console.log("SERVER CONNECTED at port " + port);
