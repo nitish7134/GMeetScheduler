@@ -40,6 +40,7 @@ app.get('/list', (req, res) => {
 
 
 app.post('/postlink', (req, res) => {
+    console.log(req.body)
     req.body.startTime = new Date(req.body.startTime) + (5.5*3600000);
     req.body.endTime = new Date(req.body.endTime) + (5.5*3600000);
     if(req.body.pwd != config.securityCode){
@@ -48,6 +49,7 @@ app.post('/postlink', (req, res) => {
         return res;
     }
     delete req.body.pwd;
+    console.log(req.body); 
     MeetSchedule.create(req.body)
         .then(meetSchedule => {
             if (meetSchedule) {
