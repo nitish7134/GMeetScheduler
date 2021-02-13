@@ -45,8 +45,8 @@ app.post('/postlink', (req, res) => {
             });
 
             app.post('/postlink', (req, res) => {
-                req.body.startTime = new Date(req.body.startTime);
-                req.body.endTime = new Date(req.body.endTime);
+                req.body.startTime = new Date(req.body.startTime).toLocaleString("en-US", {timeZone: "Indian/Christmas"});
+                req.body.endTime = new Date(req.body.endTime).toLocaleString("en-US", {timeZone: "Indian/Christmas"});
                 MeetSchedule.create(req.body)
                     .then(meetSchedule => {
                         if (meetSchedule) {
