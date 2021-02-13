@@ -45,6 +45,8 @@ app.post('/postlink', (req, res) => {
             });
 
             app.post('/postlink', (req, res) => {
+                req.body.startTime = new Date(req.body.startTime);
+                req.body.endTime = new Date(req.body.endTime);
                 MeetSchedule.create(req.body)
                     .then(meetSchedule => {
                         if (meetSchedule) {

@@ -38,7 +38,7 @@ function CancelThis(id){
         type:"GET",
         credentials: 'same-origin',
         success: function (response) {
-            document.location.reload();
+            window.location.reload();
         }
 
     });
