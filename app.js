@@ -37,34 +37,25 @@ app.get('/list', (req, res) => {
 
     })
 });
-app.post('/postlink', (req, res) => {
-    MeetSchedule.create(req.body)
-        .then(url => {
-            app.get('/', (req, res) => {
-                res.render('index', { url, email, password })
-            });
 
-            app.post('/postlink', (req, res) => {
-                req.body.startTime = new Date(req.body.startTime).toLocaleString("en-US", {timeZone: "Indian/Christmas"});
-                req.body.endTime = new Date(req.body.endTime).toLocaleString("en-US", {timeZone: "Indian/Christmas"});
-                MeetSchedule.create(req.body)
-                    .then(meetSchedule => {
-                        if (meetSchedule) {
-                            res.statusCode = 200;
-                        } else {
-                            res.statusCode = 500;
-                        }
-                    }).catch((err) => {
-                        console.log("Couldn't create a new URl instance");
-                        console.log(err);
-                    })
-                res.redirect("/");
-            });
+
+app.post('/postlink', (req, res) => {
+    req.body.startTime = new Date(req.body.startTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
+    req.body.endTime = new Date(req.body.endTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
+    MeetSchedule.create(req.body)
+        .then(meetSchedule => {
+            if (meetSchedule) {
+                res.statusCode = 200;
+            } else {
+                res.statusCode = 500;
+            }
         }).catch((err) => {
             console.log("Couldn't create a new URl instance");
             console.log(err);
-        });
+        })
+    res.redirect("/");
 });
+
 app.get('/Cancel/:ScheduleID', (req, res, next) => {
     MeetSchedule.findById(req.params.ScheduleID).then(meetSchedule => {
         if (meetSchedule.joined == true) {
@@ -109,19 +100,19 @@ connect.then(() => {
     let isRunning = false;
     setInterval(() => {
         if (isRunning) {
-          //  console.log("Sad")
+            //  console.log("Sad")
         } else {
             isRunning = true;
-           // console.log("Checking After 5 Sec")
+            // console.log("Checking After 5 Sec")
             MeetSchedule.find({}).then(meetSchedule => {
                 let flag = true;
 
                 console.log(meetSchedule);
                 for (let i = 0; i < meetSchedule.length; i++) {
                     if (meetSchedule[i].joined !== true) {
-                     //   console.log("Aint Joined this " + i)
+                        //   console.log("Aint Joined this " + i)
                         if (meetSchedule[i].startTime < Date.now()) {
-                          //  console.log(`Request for joining meet ${meetSchedule[i].meetLink}`);
+                            //  console.log(`Request for joining meet ${meetSchedule[i].meetLink}`);
                             flag = false;
                             obj.schedule(meetSchedule[i].meetLink);
                             MeetSchedule.findOneAndUpdate({ _id: meetSchedule[i]._id }, { $set: { joined: true } }, { new: true }).then(meetSchedule => {
@@ -130,13 +121,13 @@ connect.then(() => {
                             });
                         }
                     } else {
-                       // console.log(" Joined " + i)
+                        // console.log(" Joined " + i)
                         if (meetSchedule[i].endTime < Date.now()) {
                             console.log(`Request for leaving meet ${meetSchedule[i].meetLink}`);
                             flag = false;
                             obj.end();
                             MeetSchedule.deleteOne({ _id: meetSchedule[i]._id }).then(err => {
-                            //    console.log("Deleted From DB")
+                                //    console.log("Deleted From DB")
                                 isRunning = false;
 
                             })
