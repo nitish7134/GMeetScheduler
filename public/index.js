@@ -51,6 +51,7 @@ function postSchedule() {
     itemJSON.meetLink = rawData[0].value;
     itemJSON.startTime = rawData[1].value;
     itemJSON.endTime = rawData[2].value;
+    itemJSON.pwd = rawData[3].value;
     if(!itemJSON.meetLink.includes("meet")){
         itemJSON.meetLink = "https://meet.google.com/" +itemJSON.meetLink
     }

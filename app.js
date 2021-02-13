@@ -42,6 +42,11 @@ app.get('/list', (req, res) => {
 app.post('/postlink', (req, res) => {
     req.body.startTime = new Date(req.body.startTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
     req.body.endTime = new Date(req.body.endTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
+    if(req.body.pwd != config.securityCode){
+        res.statusCode = 401;
+        return res;
+    }
+    delete req.body.pwd;
     MeetSchedule.create(req.body)
         .then(meetSchedule => {
             if (meetSchedule) {
