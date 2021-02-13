@@ -43,6 +43,7 @@ app.post('/postlink', (req, res) => {
     req.body.startTime = new Date(req.body.startTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
     req.body.endTime = new Date(req.body.endTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
     if(req.body.pwd != config.securityCode){
+        console.log("Check Code");
         res.statusCode = 401;
         return res;
     }
