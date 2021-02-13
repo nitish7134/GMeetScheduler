@@ -40,8 +40,8 @@ app.get('/list', (req, res) => {
 
 
 app.post('/postlink', (req, res) => {
-    req.body.startTime = new Date(req.body.startTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
-    req.body.endTime = new Date(req.body.endTime).toLocaleString("en-US", { timeZone: "Indian/Christmas" });
+    req.body.startTime = new Date(req.body.startTime) + (5.5*3600000);
+    req.body.endTime = new Date(req.body.endTime) + (5.5*3600000);
     if(req.body.pwd != config.securityCode){
         console.log("Check Code");
         res.statusCode = 401;
