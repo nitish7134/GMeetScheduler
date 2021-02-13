@@ -22,7 +22,6 @@
                     placeholder="https://meet.google.com/abc-defg-hij or abc-defg-hij" required>
             </div>
             <div class="form-group">
-                <input type="hidden" id="timezone" name="timezone" value="+5:30">
                 <label for="startDate">Class Start Time</label>
                 <input name="startDate" type="datetime-local" class="form-control" id="startDate" required>
             </div>
@@ -31,6 +30,8 @@
                 <input name="endDate" type="datetime-local" class="form-control" id="endDate" required>
             </div>
             <div class="form-group mt-2">
+                <input type="hidden" id="timezone" name="timezone" value="+5:30">
+
                 <button type="submit" class="btn btn-primary" onclick="postSchedule();">Post Bhenchod</button>
             </div>
         </form>
