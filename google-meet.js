@@ -38,7 +38,7 @@ class GoogleMeet {
             })
             await this.page.click("div#identifierNext")
 
-            await this.page.waitForTimeout(2000)
+            await this.page.waitForTimeout(4000)
 
             await this.page.type("input[name=password]", this.pass, {
                 delay: 0
@@ -46,53 +46,13 @@ class GoogleMeet {
             await this.page.click("div#passwordNext")
 
             await this.page.waitForTimeout(1500)
-            await this.page.waitForTimeout(10000)
-
 
             await this.page.goto(url)
 
             console.log("inside meet page")
 
-/* 
-            describe('Test 1', () => {
-                beforeAll(async () => {
-                  await page.goto('https://meet.google.com/vts-qpha-upb');
-                });
-                it('Test 1 - 1', async () => {
-                    await page.click('.uB7U9e > .oTVIqe > svg');
-                  await page.click('.JnDFsc > .IYwVEf > .oTVIqe > svg');
-                }, 60000);
-              }); */
-              await this.page.waitForTimeout(7000)
-/*
-           
-            try {
-                await this.page.click("div.IYwVEf.HotEze.uB7U9e.nAZzG")
-            } catch (e) {
-                console.log ("\naudio seems to disabled already")
-                console.log (e);
-            }
-            await this.page.waitForTimeout(1000)
-            try {
-                await this.page.click( "div.IYwVEf.HotEze.nAZzG")
-            } catch (e) {
-                console.log ("\nvideo seems to be disabled already")
-                console.log (e)
-            }
-
-            // sanity check (connect only if both audio and video are muted) :P
-            if (this.strict || !this.strict) {
-                let audio = await this.page.evaluate('document.querySelectorAll("div.sUZ4id")[0].children[0].getAttribute("data-is-muted")')
-                let video = await this.page.evaluate('document.querySelectorAll("div.sUZ4id")[1].children[0].getAttribute("data-is-muted")')
-
-                if (audio === "false" || video === "false") {
-                    console.log ("Not joining meeting. We couldn't disable either audio or video from the device.\nYou may try again.")
-                    return
-                }
-                console.log ("all set!!")
-            }
-*/
-            await this.page.waitForTimeout(1000)
+            await this.page.waitForTimeout(10000)
+    
             console.log('clicking on join')
             await this.page.click("span.NPEfkd.RveJvd.snByac")
 
