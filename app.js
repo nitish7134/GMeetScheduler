@@ -41,15 +41,15 @@ app.get('/list', (req, res) => {
 
 app.post('/postlink', (req, res) => {
     console.log(req.body)
-    req.body.startTime = new Date(req.body.startTime) + (5.5*3600000);
-    req.body.endTime = new Date(req.body.endTime) + (5.5*3600000);
-    if(req.body.pwd != config.securityCode){
+    req.body.startTime = new Date(req.body.startTime) + (5.5 * 3600000);
+    req.body.endTime = new Date(req.body.endTime) + (5.5 * 3600000);
+    if (req.body.pwd != config.securityCode) {
         console.log("Check Code");
         res.statusCode = 401;
         return res;
     }
     delete req.body.pwd;
-    console.log(req.body); 
+    console.log(req.body);
     MeetSchedule.create(req.body)
         .then(meetSchedule => {
             if (meetSchedule) {
@@ -95,58 +95,50 @@ app.use(function (err, req, res, next) {
 const port = 80;
 
 // Values
-let email = config.EMAIL;
-let password = config.PASSWORD;
-
 let head = config.head;
 let strict = config.strict;
 
-obj = new GoogleMeet(email, password, head, strict);
+Nobj = new GoogleMeet(config.NITISH.EMAIL, config.Suparth.PASSWORD, head, strict);
+Sobj = new GoogleMeet(config.Suparth.EMAIL, config.Suparth.PASSWORD, head, strict);
 
 connect.then(() => {
     console.log("Connected correctly to server");
     let isRunning = false;
     setInterval(() => {
-        if (isRunning) {
-            //  console.log("Sad")
-        } else {
-            isRunning = true;
-            // console.log("Checking After 5 Sec")
-            MeetSchedule.find({}).then(meetSchedule => {
-                let flag = true;
 
-                console.log(meetSchedule);
-                for (let i = 0; i < meetSchedule.length; i++) {
-                    if (meetSchedule[i].joined !== true) {
-                        //   console.log("Aint Joined this " + i)
-                        if (meetSchedule[i].startTime < Date.now()) {
-                            //  console.log(`Request for joining meet ${meetSchedule[i].meetLink}`);
-                            flag = false;
-                            obj.schedule(meetSchedule[i].meetLink);
-                            MeetSchedule.findOneAndUpdate({ _id: meetSchedule[i]._id }, { $set: { joined: true } }, { new: true }).then(meetSchedule => {
-                                console.log("Updated in DB");
-                                isRunning = false;
-                            });
-                        }
-                    } else {
-                        // console.log(" Joined " + i)
-                        if (meetSchedule[i].endTime < Date.now()) {
-                            console.log(`Request for leaving meet ${meetSchedule[i].meetLink}`);
-                            flag = false;
-                            obj.end();
-                            MeetSchedule.deleteOne({ _id: meetSchedule[i]._id }).then(err => {
-                                //    console.log("Deleted From DB")
-                                isRunning = false;
+        // console.log("Checking After 5 Sec")
+        MeetSchedule.find({}).then(meetSchedule => {
+            console.log(meetSchedule);
+            for (let i = 0; i < meetSchedule.length; i++) {
+                if (meetSchedule[i].joined !== true) {
+                    //   console.log("Aint Joined this " + i)
+                    if (meetSchedule[i].startTime < Date.now()) {
+                        //  console.log(`Request for joining meet ${meetSchedule[i].meetLink}`);
+                        if (meetSchedule[i].who == "N")
+                            Nobj.schedule(meetSchedule[i].meetLink);
+                        else
+                            Sobj.schedule(meetSchedule[i].meetLink);
+                        MeetSchedule.findOneAndUpdate({ _id: meetSchedule[i]._id }, { $set: { joined: true } }, { new: true }).then(meetSchedule => {
+                            console.log("Updated in DB");
+                        });
+                    }
+                } else {
+                    // console.log(" Joined " + i)
+                    if (meetSchedule[i].endTime < Date.now()) {
+                        console.log(`Request for leaving meet ${meetSchedule[i].meetLink}`);
+                        if (meetSchedule[i].who == "N")
+                            Nobj.end();
+                        else
+                            Sobj.end();
+                        MeetSchedule.deleteOne({ _id: meetSchedule[i]._id }).then(err => {
+                            //    console.log("Deleted From DB")
 
-                            })
-                        }
+                        })
                     }
                 }
-                if (flag)
-                    isRunning = false;
+            }
+        });
 
-            });
-        }
     }, 60000)
 
     app.listen(port, () => {

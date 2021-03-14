@@ -19,6 +19,11 @@ var meetSchedule = new Schema({
   joined: {
     type: Boolean,
     default: false
+  },
+  who:{
+    type:String,
+    required: true,
+    default:'N'
   }
 });
 

@@ -31,10 +31,18 @@
             </div>
             <div class="form-group">
                 <label for="pwd">Security Code</label>
-                <input name="pwd" type="password"  id="pwd" required>
+                <input name="pwd" type="password" id="pwd" required>
             </div>
+            <div class="form-group">
+                <label for="who">Choose who you:</label>
+                <select name="who" id="who">
+                    <option value="N">N</option>
+                    <option value="S">S</option>
+                </select>
+            </div>
+
             <div class="form-group mt-2">
-                <button class="btn btn-primary" onclick="postSchedule();">Post Bhenchod</button>
+                <button class="btn btn-primary" onclick="postSchedule();">Post MeetSchedule</button>
             </div>
         </form>
         <br>
@@ -43,7 +51,7 @@
     <div class="container" style="text-align: center; max-width: 850px;">
         <h1 class="display-4" style="font-size: 40px;">Scheduled</h1>
         <div class="card-group" id="mainContainer">
-            
+
         </div>
     </div>
 
@@ -52,7 +60,7 @@
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
