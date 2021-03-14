@@ -147,7 +147,7 @@ connect.then(() => {
 
             });
         }
-    }, 300000)
+    }, 60000)
 
     app.listen(port, () => {
         console.log("SERVER CONNECTED at port " + port);
